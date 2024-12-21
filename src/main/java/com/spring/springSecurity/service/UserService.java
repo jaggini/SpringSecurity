@@ -17,11 +17,23 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username);
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+
+        // Create a UserDetails object for Spring Security
+        // UserDetails userDetails = User.builder()
+        // .username(user.getEmail())
+        // .password(user.getPassword())
+        // .authorities(user.getAuthorities())
+        // .build();
+        // }
+
+        return user;
     }
 
     public void saveuser(User u) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'saveuser'");
+
+        userRepository.save(u);
     }
 }

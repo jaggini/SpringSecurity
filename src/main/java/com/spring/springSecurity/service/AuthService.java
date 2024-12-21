@@ -30,8 +30,12 @@ public class AuthService {
             request.setRole(Role.CUSTOMER);
         }
 
-        User user = User.builder().name(request.getName()).email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword())).role(request.getRole()).build();
+        User user = User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(request.getRole())
+                .build();
 
         userRepository.save(user);
 
@@ -40,8 +44,9 @@ public class AuthService {
     }
 
     public AuthResponse login(AuthRequest request) {
-        authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(), request.getPassword()));
         return AuthResponse.builder().build();
     }
 

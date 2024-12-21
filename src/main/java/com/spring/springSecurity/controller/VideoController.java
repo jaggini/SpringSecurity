@@ -34,7 +34,7 @@ public class VideoController {
         Video v = videoService.getVideoById(id).orElseThrow(() -> new RuntimeException("error"));
         videoService.craetVideo(v);
         u.getRVideos().remove(v);
-        userService.saveuser(u);
+       userService.saveuser(u);
         return ResponseEntity.ok("get all videos successfuly");
 
     }
